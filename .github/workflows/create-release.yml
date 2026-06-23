@@ -19,7 +19,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           repo: ${{ github.repository }}
         run: |
-          version=$(grep 'version' metadata.txt | cut -d '=' -f2 | xargs)
+          version=$(grep '^version=' metadata.txt | cut -d '=' -f2 | xargs)
           tag="v$version"
 
           gh api "repos/$repo/releases/generate-notes" \
