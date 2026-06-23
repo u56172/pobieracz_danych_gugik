@@ -1,4 +1,4 @@
-# Pobieracz danych GUGiK test2
+# Pobieracz danych GUGiK test3
 
 ## PL
 Wtyczka QGIS do pobierania danych przestrzennych z zasobów GUGiK. Od wersji 0.2 wtyczka generuje dodatkowo raport TXT z informacjami dodatkowymi na temat pobranych plików.
