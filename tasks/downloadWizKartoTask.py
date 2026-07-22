@@ -1,4 +1,5 @@
-import os, datetime
+import os
+import datetime
 from qgis.core import QgsTask
 from ..utils import MessageUtils, ServiceAPI
 
@@ -7,7 +8,7 @@ class DownloadWizKartoTask(QgsTask):
     """QgsTask pobierania wizualizacji kartograficznej BDOT10k"""
 
     def __init__(self, description, wizKartoList, folder, iface):
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.wizKartoList = wizKartoList
         self.folder = folder
         self.total = 0

@@ -3,17 +3,11 @@
 
 import os
 import warnings
-from .utils import VersionUtils
 from qgis.PyQt import QtWidgets, uic
-from qgis.PyQt.QtCore import QT_VERSION_STR, pyqtSignal
+from qgis.PyQt.QtCore import pyqtSignal
 
-# różne importy w zależności od wersji Qt
-if VersionUtils.isCompatibleQtVersion(QT_VERSION_STR, 6):
-    from qgis.PyQt.QtCore import QRegularExpression
-    from qgis.PyQt.QtGui import QRegularExpressionValidator
-else: 
-    from qgis.PyQt.QtCore import QRegExp
-    from qgis.PyQt.QtGui import QRegExpValidator
+from qgis.PyQt.QtCore import QRegularExpression
+from qgis.PyQt.QtGui import QRegularExpressionValidator
 
 from qgis._core import Qgis, QgsMapLayerProxyModel
 from qgis.gui import QgsFileWidget
@@ -35,14 +29,15 @@ class PobieraczDanychDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             return Qgis.LayerFilters(
                 Qgis.LayerFilter.PolygonLayer | Qgis.LayerFilter.LineLayer | Qgis.LayerFilter.PointLayer
             )
+
         warnings.filterwarnings("ignore", category=DeprecationWarning)
-        return QgsMapLayerProxyModel.PolygonLayer | QgsMapLayerProxyModel.LineLayer | QgsMapLayerProxyModel.PointLayer
+        return QgsMapLayerProxyModel.Filter.PolygonLayer | QgsMapLayerProxyModel.Filter.LineLayer | QgsMapLayerProxyModel.Filter.PointLayer
 
     def __init__(self, regionFetch, parent=None):
         """Constructor."""
         super(PobieraczDanychDockWidget, self).__init__(parent)
         self.setupUi(self)
-        self.folder_fileWidget.setStorageMode(QgsFileWidget.GetDirectory)
+        self.folder_fileWidget.setStorageMode(QgsFileWidget.StorageMode.GetDirectory)
         self.regionFetch = regionFetch
         self.wfsFetch = WfsFetch()
         self.setup_dialog()
@@ -74,10 +69,7 @@ class PobieraczDanychDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.wfsServiceCmbbxCurrentTextChanged(aktualna_warstwa)
 
     def setupValidators(self):
-        if VersionUtils.isCompatibleQtVersion(QT_VERSION_STR, 6):
-            double_validator = QRegularExpressionValidator(QRegularExpression("[0-9.]*"))
-        else:
-            double_validator = QRegExpValidator(QRegExp("[0-9.]*"))
+        double_validator = QRegularExpressionValidator(QRegularExpression("[0-9.]*"))
         for obj in DOUBLE_VALIDATOR_OBJECTS:
             getattr(self, obj).setValidator(double_validator)
 

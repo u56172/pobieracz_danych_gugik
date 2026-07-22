@@ -2,12 +2,13 @@ from qgis.core import QgsTask
 from ..constants import PRNG_WMS_URL
 from ..utils import MessageUtils, ServiceAPI
 
+
 class DownloadPrngTask(QgsTask):
     """QgsTask pobierania PRNG"""
 
     def __init__(self, description, folder, rodzaj, format_danych, iface):
 
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.folder = folder
         self.rodzaj = rodzaj
         self.format_danych = format_danych

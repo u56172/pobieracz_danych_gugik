@@ -1,4 +1,4 @@
-from qgis.core import QgsApplication, QgsTask, Qgis
+from qgis.core import QgsTask
 from ..utils import MessageUtils, ServiceAPI
 
 
@@ -7,7 +7,7 @@ class DownloadOpracowaniaTyflologiczneTask(QgsTask):
 
     def __init__(self, description, folder, url, iface):
 
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.folder = folder
         self.exception = None
         self.url = url

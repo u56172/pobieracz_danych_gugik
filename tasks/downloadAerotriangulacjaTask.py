@@ -1,7 +1,7 @@
-import os, datetime
+import os
 from qgis.core import (
-    QgsApplication, QgsTask, Qgis
-    )
+    QgsTask
+)
 from ..utils import FileUtils, MessageUtils, ServiceAPI
 from ..constants import HEADERS_MAPPING
 
@@ -10,7 +10,7 @@ class DownloadAerotriangulacjaTask(QgsTask):
     """QgsTask pobierania aerotriangulacji"""
 
     def __init__(self, description, aerotriangulacjaList, folder, iface):
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.aerotriangulacjaList = aerotriangulacjaList
         self.folder = folder
         self.total = 0

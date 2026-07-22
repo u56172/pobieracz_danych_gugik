@@ -1,13 +1,14 @@
-import os, datetime
-from qgis.core import QgsApplication, QgsTask, Qgis
+import os
+from qgis.core import QgsTask
 from ..utils import MessageUtils, FileUtils, ServiceAPI
 from ..constants import HEADERS_MAPPING
+
 
 class DownloadOrtofotoTask(QgsTask):
     """QgsTask pobierania ortofotomap"""
 
     def __init__(self, description, ortoList, folder, iface):
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.ortoList = ortoList
         self.folder = folder
         self.total = 0
@@ -43,12 +44,12 @@ class DownloadOrtofotoTask(QgsTask):
 
         if not any(results):
             return False
-            
+
         if all(results):
             self.exception = True
-            
+
         FileUtils.createReport(os.path.join(self.folder, 'pobieracz_ortofoto'), HEADERS_MAPPING['ORTHOPHOTO_HEADERS'], self.ortoList)
-        
+
         return True
 
     def finished(self, result):
@@ -72,5 +73,3 @@ class DownloadOrtofotoTask(QgsTask):
     def cancel(self):
         MessageUtils.pushLogWarning('Anulowano pobieranie ortofotomapy')
         super().cancel()
-
- 

@@ -1,7 +1,6 @@
-import os, datetime
 from qgis.core import (
-    QgsApplication, QgsTask, Qgis
-    )
+    QgsTask
+)
 
 from ..constants import BDOO_WMS_URL
 from ..utils import MessageUtils, ServiceAPI
@@ -17,7 +16,7 @@ class DownloadBdooTask(QgsTask):
         1 - województwo
         2 - powiat
         """
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.folder = folder
         # self.total = 0
         # self.iterations = 0
@@ -47,7 +46,7 @@ class DownloadBdooTask(QgsTask):
         else:
             error_msg = str(self.exception) if self.exception and self.exception is not True else "Błąd nieznany"
             MessageUtils.pushLogWarning(f"Błąd BDOO: {error_msg}")
-            MessageUtils.pushWarning(self.iface, f'Dane BDOO nie zostały pobrane')
+            MessageUtils.pushWarning(self.iface, 'Dane BDOO nie zostały pobrane')
 
     def cancel(self):
         MessageUtils.pushLogWarning('Anulowano pobieranie danych BDOO')

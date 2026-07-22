@@ -1,12 +1,12 @@
-import os
 from qgis.core import QgsTask
 from ..utils import MessageUtils, ServiceAPI
+
 
 class DownloadWfsTask(QgsTask):
     """QgsTask pobierania WFS"""
 
     def __init__(self, description, urlList, folder, iface):
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.urlList = urlList
         self.folder = folder
         self.total = 0
@@ -14,7 +14,6 @@ class DownloadWfsTask(QgsTask):
         self.exception = None
         self.iface = iface
         self.service_api = ServiceAPI()
-
 
     def run(self):
         """Here you implement your heavy lifting.
@@ -50,7 +49,7 @@ class DownloadWfsTask(QgsTask):
         to do GUI operations and raise Python exceptions here.
         result is the return value from self.run.
         """
-        
+
         if result and self.exception:
             MessageUtils.pushLogInfo('Pobrano dane WFS')
             MessageUtils.pushSuccess(self.iface, 'Udało się! Dane WFS zostały pobrane.')
@@ -60,9 +59,9 @@ class DownloadWfsTask(QgsTask):
             MessageUtils.pushWarning(self.iface, 'Nie pobrano pełnego zbioru danych')
         else:
             if self.exception is None:
-               MessageUtils.pushLogWarning('Nie udało się pobrać danych WFS')
+                MessageUtils.pushLogWarning('Nie udało się pobrać danych WFS')
             elif isinstance(self.exception, BaseException):
-               MessageUtils.pushLogWarning('Nie udało się pobrać danych WFS. Wystąpił błąd: ' + str(self.exception))
+                MessageUtils.pushLogWarning('Nie udało się pobrać danych WFS. Wystąpił błąd: ' + str(self.exception))
             MessageUtils.pushWarning(self.iface, 'Dane WFS nie zostały pobrane.')
 
     def cancel(self):

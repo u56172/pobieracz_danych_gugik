@@ -1,16 +1,17 @@
 from qgis.core import (
-    QgsTask, Qgis
+    QgsTask
 )
 
 from ..constants import EGIB_WMS_URL, EGIB_TERYT_MAPPING, TIMEOUT_MS
 from ..utils import MessageUtils, NetworkUtils, ServiceAPI
+
 
 class DownloadEgibExcelTask(QgsTask):
     """QgsTask pobierania zestawień zbiorczych EGiB"""
 
     def __init__(self, description, folder, egib_excel_zakres_danych, rok, teryt_powiat, teryt_wojewodztwo, iface):
 
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.folder = folder
         self.exception = None
         self.zakres_danych = egib_excel_zakres_danych
@@ -60,7 +61,7 @@ class DownloadEgibExcelTask(QgsTask):
         return False
 
     def finished(self, result):
-        
+
         if result and self.exception:
             MessageUtils.pushLogInfo('Pobrano dane zestawień zbiorczych EGiB')
             MessageUtils.pushSuccess(self.iface, 'Udało się! Dane zestawień zbiorczych EGiB zostały pobrane.')

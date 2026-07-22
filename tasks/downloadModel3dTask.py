@@ -1,4 +1,4 @@
-from qgis.core import QgsTask, Qgis
+from qgis.core import QgsTask
 from ..constants import BUDYNKI_3D_WMS_URL
 from ..utils import MessageUtils, ServiceAPI
 
@@ -7,7 +7,7 @@ class DownloadModel3dTask(QgsTask):
     """QgsTask pobierania modeli 3D"""
 
     def __init__(self, description, folder, teryt_powiat, teryt_wojewodztwo, standard, data_lista, iface):
-        super().__init__(description, QgsTask.CanCancel)
+        super().__init__(description, QgsTask.Flag.CanCancel)
         self.folder = folder
         self.exception = None
         self.teryt_powiat = teryt_powiat
@@ -53,7 +53,7 @@ class DownloadModel3dTask(QgsTask):
                 title = "Komunikat"
                 message = f"Pobrano {len(self.liczba_dobrych_url)} plików z danymi"
                 MessageUtils.pushMessageBoxInfo(self.iface.mainWindow(), title, message)
-            
+
             MessageUtils.pushLogInfo('Pobrano dane modelu 3D budynków')
             MessageUtils.pushSuccess(self.iface, 'Udało się! Dane modelu 3D budynków zostały pobrane.')
         else:
@@ -62,7 +62,6 @@ class DownloadModel3dTask(QgsTask):
                 MessageUtils.pushLogWarning('Nie udało się pobrać danych modelu 3D budynków')
             elif isinstance(self.exception, BaseException):
                 MessageUtils.pushLogWarning("Nie udało się pobrać danych modelu 3D budynków. Wystąpił błąd: " + str(self.exception))
-
 
     def cancel(self):
         MessageUtils.pushLogWarning('Anulowano pobieranie danych modelu 3D budynków')
