@@ -3,13 +3,13 @@ import re
 from .constants import KARTOTEKI_OSNOW_WMS_URL, KARTOTEKI_OSNOW_SKOROWIDZE_LAYERS, KARTOTEKI_OSNOW_ARCHIWALNE_WMS_URL, WMS_GET_FEATURE_INFO_PARAMS, KATALOGI_OSNOW
 from .utils import ServiceAPI
 
-
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QVBoxLayout
 def getKartotekiOsnowListbyPoint1992(point, is_kronsztad):
     """Zwraca listę dostępnych do pobrania archiwalnych kartotek osnów geodezyjnych na podstawie
     zapytania GetFeatureInfo z usługi WMS"""
     x = point.x()
     y = point.y()
-
+    
     params = WMS_GET_FEATURE_INFO_PARAMS.copy()
     params.update({
         'layers': ','.join(KARTOTEKI_OSNOW_SKOROWIDZE_LAYERS),
