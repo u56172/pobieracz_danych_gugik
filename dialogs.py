@@ -6,7 +6,7 @@ import warnings
 from .utils import VersionUtils
 from qgis.PyQt import QtWidgets, uic
 from qgis.PyQt.QtCore import QT_VERSION_STR, pyqtSignal
-
+#test
 # różne importy w zależności od wersji Qt
 if VersionUtils.isCompatibleQtVersion(QT_VERSION_STR, 6):
     from qgis.PyQt.QtCore import QRegularExpression
